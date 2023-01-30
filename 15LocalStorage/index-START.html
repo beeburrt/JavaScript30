@@ -72,6 +72,7 @@
         }
         items.push(item);
         populateList(items, itemsList);
+        localStorage.setItem("items", JSON.stringify(items));
         this.reset();
       }
 
@@ -86,10 +87,22 @@
         }).join("");
       }
 
+      function toggleDone(evt) {
+        if (!evt.target.matches("input")) return;
+
+        const el = evt.target;
+        const index = el.dataset.index;
+        items[index].done = !items[index].done;
+        localStorage.setItem("items", JSON.stringify(items));
+        populateList(items, itemsList);
+      }
+
       addItems.addEventListener("submit", addItem);
+      itemsList.addEventListener("click", toggleDone);
+
+      populateList(items, itemsList);
 
       // console.log(btnUncheck);
-   
 
     </script>
   </body>
