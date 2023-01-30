@@ -65,63 +65,32 @@
 
       function addItem(evt) {
         evt.preventDefault();
-        const text = this.querySelector("[name=item]").value;
+        const text = (this.querySelector("[name=item")).value;
         const item = {
           text,
-          done: false,
-        };
-
+          done: false
+        }
         items.push(item);
         populateList(items, itemsList);
-
-        localStorage.setItem("items", JSON.stringify(items));
         this.reset();
       }
 
       function populateList(plates = [], platesList) {
-        platesList.innerHTML = plates
-          .map((plate, i) => {
-            return `
+        platesList.innerHTML = plates.map((plate, i) => {
+          return `
             <li>
-              <input type="checkbox" data-index=${i} id=item${i} ${
-              plate.done ? "checked" : ""
-            } />
+              <input type="checkbox" data-index=${i} id="item${i}" ${plate.done ? "checked" : ""} />
               <label for="item${i}">${plate.text}</label>  
             </li>
           `;
-          })
-          .join("");
-      }
-
-      function toggleDone(evt) {
-        if (!evt.target.matches("input")) return;
-        const el = evt.target;
-        const idx = el.dataset.index;
-        items[idx].done = !items[idx].done;
-        localStorage.setItem("items", JSON.stringify(items));
-        populateList(items, itemsList);
-      }
-
-      function toggleChecked(evt) {
-        if (evt.target.innerText.includes("uncheck")) {
-          console.log(items);
-          items.forEach((item) => (item.done = true));
-          localStorage.setItem("items", JSON.stringify(items));
-          populateList(items, itemsList);
-        } else {
-          console.log(items);
-          items.forEach((item) => (item.done = false));
-          localStorage.setItem("items", JSON.stringify(items));
-          populateList(items, itemsList);
-        }
+        }).join("");
       }
 
       addItems.addEventListener("submit", addItem);
-      itemsList.addEventListener("click", toggleDone);
-      btnCheck.addEventListener("click", toggleChecked);
-      btnUncheck.addEventListener("click", toggleChecked);
 
-      populateList(items, itemsList);
+      // console.log(btnUncheck);
+   
+
     </script>
   </body>
 </html>
